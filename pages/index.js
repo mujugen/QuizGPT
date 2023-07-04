@@ -68,7 +68,7 @@ export default function Home() {
       <h1 className="title text-7xl font-bold text-center">QuizGPT</h1>
       <div className="flex flex-row text-container">
         <div className="long-text-container">
-          <h2 className="long-text text-5xl text-center mb-8">Prompt:</h2>
+          <h2 className="long-text text-5xl text-center mb-8 white">Prompt:</h2>
           <h3
             id="question-box"
             className="long-text text-3xl text-center question-box"
@@ -84,7 +84,7 @@ export default function Home() {
           </h3>
         </div>
         <div className="long-text-container">
-          <h2 className="long-text text-5xl text-center mb-8">Answer:</h2>
+          <h2 className="long-text text-5xl text-center mb-8 white">Answer:</h2>
           <h3 id="answer-box" className="long-text text-3xl text-center">
             {answerValue.split("\n").map((item, key) => {
               return (

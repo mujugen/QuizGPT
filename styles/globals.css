@@ -114,9 +114,13 @@ textarea:focus {
 }
 
 .text-container {
-  padding: 0 10% 2000px 10%;
+  padding: 0 10% 500px 10%;
   margin-top: 190px;
 }
 
 .question-box {
+}
+
+.white {
+  color: white;
 }
