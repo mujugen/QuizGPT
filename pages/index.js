@@ -1,74 +1,74 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+
+var { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+var openai = new OpenAIApi(configuration);
 
 export default function Home() {
+  const [textareaValue, setTextareaValue] = useState("");
+
+  const handleTextareaChange = (event) => {
+    setTextareaValue(event.target.value);
+  };
+
+  const sendRequest = async (prompt) => {
+    const response = await fetch("/api/askPrompt", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(prompt),
+    });
+
+    if (response.ok) {
+      const responseString = await response.json();
+      return responseString.message;
+    } else {
+      console.error("Request failed.");
+    }
+  };
+
+  function convertToPrompt(inputText) {
+    const lines = inputText.split("\n");
+
+    const choicesIndex = lines.findIndex(
+      (line) => line.trim() === "Group of answer choices"
+    );
+
+    const question = lines.slice(0, choicesIndex).join("\n").trim();
+
+    const choices = lines
+      .slice(choicesIndex + 1)
+      .map((line) => line.trim())
+      .filter((line) => line !== "");
+
+    const choicesArray = choices.map(
+      (choice, index) => `${index + 1}: ${choice}`
+    );
+
+    let prompt = `Select the correct answer:\n`;
+    prompt += `Question: ${question}`;
+    prompt += "\nChoices:\n";
+    prompt += choicesArray.join("\n");
+
+    return prompt;
+  }
+  async function sendPrompt() {
+    let inputText = textareaValue;
+    let prompt = convertToPrompt(inputText);
+    console.log(prompt);
+    let response = await sendRequest(prompt);
+    console.log(`Response: ${response}`);
+  }
   return (
     <>
       <h1 className="title text-7xl font-bold text-center">QuizGPT</h1>
       <div className="answer-container">
-        <h3 className="answer text-3xl text-center">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum
-          voluptates voluptatem placeat libero perspiciatis reiciendis
-          consequuntur necessitatibus modi hic velit eius, rem officia tempore
-          neque molestias. Ipsam est fugiat dolorum. Eligendi mollitia minima id
-          libero! Voluptatem quod velit deleniti animi cum beatae non sint natus
-          delectus nisi rem nihil reiciendis esse quisquam debitis harum tempora
-          aliquam, impedit praesentium unde nam. Expedita nesciunt labore
-          deleniti fugiat. Dolorum incidunt culpa aspernatur numquam quo
-          eligendi explicabo voluptas assumenda modi sint reprehenderit
-          perferendis quis qui facilis, harum velit eaque labore eius rem, ut
-          quos? Sapiente, ex nobis modi expedita magnam autem nihil sit!
-          Officia, dicta deserunt placeat consequuntur dolore excepturi
-          reiciendis ipsam et assumenda doloribus quia omnis perspiciatis eaque,
-          dolorem est voluptates? Consequuntur, perferendis. Sed voluptatibus
-          error sit hic corrupti aspernatur cupiditate vel natus alias ex fugit
-          harum, nemo illum odio impedit qui a dolorem, fuga quisquam
-          consectetur magnam labore fugiat vero. Ex, tempore? Quibusdam magnam
-          soluta qui dolore repellat repudiandae ut nostrum voluptatem
-          reprehenderit sapiente, dignissimos consequatur esse molestias animi
-          inventore itaque aliquam culpa autem, vitae, alias ex dolor excepturi.
-          Nobis, repellat asperiores. Dolorum sunt officiis quas accusantium
-          nesciunt quisquam pariatur quis quo quam perferendis consequuntur in
-          itaque, velit aut, nisi nihil tenetur illo. Dolore, quibusdam ullam!
-          Saepe possimus laudantium ea aspernatur debitis? Quos excepturi
-          delectus ex cupiditate! Sint porro veniam quasi sapiente? Enim quaerat
-          minima ullam nobis quae vel perspiciatis voluptatibus ex ipsum numquam
-          deleniti obcaecati veniam explicabo blanditiis quia, asperiores sint!
-          Nam veritatis, sed non ipsam atque in quo inventore illum ipsum
-          voluptate accusantium beatae eveniet culpa quaerat quasi vel porro
-          laboriosam saepe! Maxime modi beatae nulla voluptate ratione similique
-          odio!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum
-          voluptates voluptatem placeat libero perspiciatis reiciendis
-          consequuntur necessitatibus modi hic velit eius, rem officia tempore
-          neque molestias. Ipsam est fugiat dolorum. Eligendi mollitia minima id
-          libero! Voluptatem quod velit deleniti animi cum beatae non sint natus
-          delectus nisi rem nihil reiciendis esse quisquam debitis harum tempora
-          aliquam, impedit praesentium unde nam. Expedita nesciunt labore
-          deleniti fugiat. Dolorum incidunt culpa aspernatur numquam quo
-          eligendi explicabo voluptas assumenda modi sint reprehenderit
-          perferendis quis qui facilis, harum velit eaque labore eius rem, ut
-          quos? Sapiente, ex nobis modi expedita magnam autem nihil sit!
-          Officia, dicta deserunt placeat consequuntur dolore excepturi
-          reiciendis ipsam et assumenda doloribus quia omnis perspiciatis eaque,
-          dolorem est voluptates? Consequuntur, perferendis. Sed voluptatibus
-          error sit hic corrupti aspernatur cupiditate vel natus alias ex fugit
-          harum, nemo illum odio impedit qui a dolorem, fuga quisquam
-          consectetur magnam labore fugiat vero. Ex, tempore? Quibusdam magnam
-          soluta qui dolore repellat repudiandae ut nostrum voluptatem
-          reprehenderit sapiente, dignissimos consequatur esse molestias animi
-          inventore itaque aliquam culpa autem, vitae, alias ex dolor excepturi.
-          Nobis, repellat asperiores. Dolorum sunt officiis quas accusantium
-          nesciunt quisquam pariatur quis quo quam perferendis consequuntur in
-          itaque, velit aut, nisi nihil tenetur illo. Dolore, quibusdam ullam!
-          Saepe possimus laudantium ea aspernatur debitis? Quos excepturi
-          delectus ex cupiditate! Sint porro veniam quasi sapiente? Enim quaerat
-          minima ullam nobis quae vel perspiciatis voluptatibus ex ipsum numquam
-          deleniti obcaecati veniam explicabo blanditiis quia, asperiores sint!
-          Nam veritatis, sed non ipsam atque in quo inventore illum ipsum
-          voluptate accusantium beatae eveniet culpa quaerat quasi vel porro
-          laboriosam saepe! Maxime modi beatae nulla voluptate ratione similique
-          odio! asdfasdfasd
-        </h3>
+        <h3 className="answer text-3xl text-center">Ask a question!</h3>
       </div>
       <div className="footer">
         <div className="textbox-container flex flex-row w-full">
@@ -77,11 +77,13 @@ export default function Home() {
             id="inputBox"
             className="drop-shadow-xl block w-full text-m"
             placeholder="Send a message"
-            required=""
+            value={textareaValue}
+            onChange={handleTextareaChange}
           />
           <button
             type="submit"
             className="submitBtn text-white right-2.5 bottom-2.5"
+            onClick={sendPrompt}
           >
             <FontAwesomeIcon icon={faPaperPlane} size="xl" />
           </button>
