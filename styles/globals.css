@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+html {
+  height: 100%;
+  width: 100% !important;
+  font-family: "Noto Sans", sans-serif;
+}
+
+#__next {
+  width: 100% !important;
+}
+
+body {
+  background-color: #444654;
+  overflow-x: hidden;
+  max-width: 100vw;
+  margin: 0 !important;
+}
+
+textarea {
+  resize: none;
+  border-bottom-right-radius: 0;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+.wrapper {
+  margin: 2% 20% 10% 20%;
+  overflow-y: hidden;
+}
+
+.footer {
+  background: rgb(52, 54, 65);
+  background: linear-gradient(
+    0deg,
+    rgba(52, 54, 65, 1) 60%,
+    rgba(52, 54, 65, 0.75) 70%,
+    rgba(52, 54, 65, 0.5) 80%,
+    rgba(52, 54, 65, 0.25) 90%,
+    rgba(52, 54, 65, 0) 100%
+  );
+  height: 570px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding: 30px;
+  padding-top: 130px;
+}
+
+.textbox-container {
+  justify-content: center;
+}
+
+#inputBox {
+  height: 400px;
+  padding: 1% 1% 1% 1%;
+  width: 100%;
+  max-width: 60vw;
+  align-self: center;
+  background-color: #40414f;
+  border-radius: 15px 0px 0px 15px;
+  color: white;
+  padding: 15px;
+  padding-left: 20px;
+  font-size: large;
+}
+
+.submitBtn {
+  border-radius: 0px 15px 15px 0px;
+  background-color: #40414f;
+  color: #6b6c7b;
+  padding: 20px;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.submitBtn:hover {
+  color: white;
+}
+
+.answer {
+  color: #97a5b8;
+  text-align: justify;
+}
+
+.answer-container {
+  max-height: 500px;
+  width: 100%;
+  padding: 0 25% 3000px 25%;
+  margin-top: 190px;
+  overflow-y: hidden;
+}
+
+.title {
+  color: #6b6c7b;
+  padding-top: 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: rgb(68, 70, 84);
+  background: linear-gradient(
+    0deg,
+    rgba(68, 70, 84, 0) 0%,
+    rgba(68, 70, 84, 0.25253851540616246) 10%,
+    rgba(68, 70, 84, 0.5074404761904762) 20%,
+    rgba(68, 70, 84, 0.7539390756302521) 30%,
+    rgba(68, 70, 84, 1) 40%
+  );
+  padding-bottom: 80px;
+}
