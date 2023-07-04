@@ -2,14 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 
-var { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-var openai = new OpenAIApi(configuration);
-
 export default function Home() {
   const [textareaValue, setTextareaValue] = useState("");
+  const [questionValue, setQuestionValue] = useState("Ask a question!");
+  const [answerValue, setAnswerValue] = useState("");
 
   const handleTextareaChange = (event) => {
     setTextareaValue(event.target.value);
@@ -60,16 +56,48 @@ export default function Home() {
   async function sendPrompt() {
     let inputText = textareaValue;
     let prompt = convertToPrompt(inputText);
+    setTextareaValue("");
+    setQuestionValue(prompt);
     console.log(prompt);
     let response = await sendRequest(prompt);
-    console.log(`Response: ${response}`);
+    setAnswerValue(response);
+    console.log(`${response}`);
   }
   return (
     <>
       <h1 className="title text-7xl font-bold text-center">QuizGPT</h1>
-      <div className="answer-container">
-        <h3 className="answer text-3xl text-center">Ask a question!</h3>
+      <div className="flex flex-row text-container">
+        <div className="long-text-container">
+          <h2 className="long-text text-5xl text-center mb-8">Prompt:</h2>
+          <h3
+            id="question-box"
+            className="long-text text-3xl text-center question-box"
+          >
+            {questionValue.split("\n").map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
+          </h3>
+        </div>
+        <div className="long-text-container">
+          <h2 className="long-text text-5xl text-center mb-8">Answer:</h2>
+          <h3 id="answer-box" className="long-text text-3xl text-center">
+            {answerValue.split("\n").map((item, key) => {
+              return (
+                <span key={key}>
+                  {item}
+                  <br />
+                </span>
+              );
+            })}
+          </h3>
+        </div>
       </div>
+
       <div className="footer">
         <div className="textbox-container flex flex-row w-full">
           <textarea

@@ -83,17 +83,16 @@ textarea:focus {
   color: white;
 }
 
-.answer {
+.long-text {
   color: #97a5b8;
   text-align: justify;
+  width: 100%;
 }
 
-.answer-container {
+.long-text-container {
   max-height: 500px;
   width: 100%;
-  padding: 0 25% 3000px 25%;
-  margin-top: 190px;
-  overflow-y: hidden;
+  padding: 0 5% 0 5%;
 }
 
 .title {
@@ -112,4 +111,12 @@ textarea:focus {
     rgba(68, 70, 84, 1) 40%
   );
   padding-bottom: 80px;
+}
+
+.text-container {
+  padding: 0 10% 2000px 10%;
+  margin-top: 190px;
+}
+
+.question-box {
 }
